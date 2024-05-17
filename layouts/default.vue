@@ -1,14 +1,15 @@
 <template>
   <v-app>
-    <v-app-bar color="#ffffff" app width="100%" height="100px">
-      <v-img :src="require('~/assets/img/logo.png')" class="logo1v"></v-img>
-      <v-spacer></v-spacer>
-      <v-btn class="nav" href="#inicio">Inicio</v-btn>
-      <v-btn class="nav" href="#productos">Productos</v-btn>
-      <v-btn class="nav" href="#nosotros">Nosotros</v-btn>
-      <v-btn class="nav" href="#contactanos">Contáctanos</v-btn>
-      <v-spacer></v-spacer>
-    </v-app-bar>
+      <v-app-bar color="#ffffff" app width="100%" height="100px">
+        <v-img :src="require('~/assets/img/logo.png')" class="logo1v"></v-img>
+        <v-spacer></v-spacer>
+        <v-btn class="nav" href="#inicio" elevation="0">Inicio</v-btn>
+        <v-btn class="nav" href="#productos" elevation="0">Productos</v-btn>
+        <v-btn class="nav" href="#nosotros" elevation="0">Nosotros</v-btn>
+        <v-btn class="nav" href="#contactanos" elevation="0">Contáctanos</v-btn>
+        <v-spacer></v-spacer>
+      </v-app-bar>
+    
 
     <div style="margin-bottom: 60px;" id="inicio"></div>
     <div class="paaginaweb123">
@@ -45,73 +46,75 @@
       <div style="margin-bottom: 60px;" id="productos"></div>
       <br>
 
-      <v-container >
-        <h1 class="Tproduc">Nuestros Productos:</h1>
-        <v-row justify="center">
-          <v-col
-            v-for="(product, index) in visibleProducts"
-            :key="index"
-            cols="12"
-            sm="6"
-            md="4"
+<v-container>
+  <h1 class="Tproduc">Nuestros Productos:</h1>
+  <v-row justify="center">
+    <v-col
+      v-for="(product, index) in visibleProducts"
+      :key="index"
+      cols="12"
+      sm="6"
+      md="4"
+    >
+      <v-card color="white" outlined>
+        <v-carousel
+          cycle
+          hide-delimiters
+          v-model="product.currentImageIndex"
+          v-show="product.images.length > 1"
+        >
+          <v-carousel-item
+            v-for="(image, imgIndex) in product.images"
+            :key="imgIndex"
           >
-            <v-card color="white" outlined>
-              <v-carousel
-                cycle
-                hide-delimiters
-                v-model="product.currentImageIndex"
-              >
-                <v-carousel-item
-                  v-for="(image, imgIndex) in product.images"
-                  :key="imgIndex"
-                >
-                  <v-img
-                    width="300px"
-                    height="300px"
-                    :src="image"
-                    contain
-                  ></v-img>
-                </v-carousel-item>
-              </v-carousel>
-              <v-card-title class="blue--text text--darken-3 custom-card-title">{{
-                product.name
-              }}</v-card-title>
-              <v-card-subtitle class="grey--text text--darken-2">{{
-                product.price
-              }}</v-card-subtitle>
-              <v-card-actions>
-                <v-btn
-                  color="#002E60"
-                  dark
-                  text
-                  @click="toggleDescription(product)"
-                  rounded
-                >
-                  {{ product.showDescription ? "Ocultar" : "Descripción" }}
-                </v-btn>
-                <v-spacer></v-spacer>
-                <v-btn color="#002E60" dark @click="buy(product)" rounded>
-                  Comprar
-                </v-btn>
-              </v-card-actions>
-              <v-expand-transition>
-                <div
-                  class="blue--text text--darken-3"
-                  v-show="product.showDescription"
-                >
-                  <v-divider></v-divider>
-                  <v-card-text>{{ product.description }}</v-card-text>
-                </div>
-              </v-expand-transition>
-            </v-card>
-          </v-col>
-        </v-row>
-        <v-row justify="center">
-          <v-btn color="#002E60" dark @click="toggleShowMore" rounded>
-            {{ showMoreText }}
+            <v-img
+              width="300px"
+              height="300px"
+              :src="image"
+              contain
+            ></v-img>
+          </v-carousel-item>
+        </v-carousel>
+        <v-card-title class="blue--text text--darken-3 custom-card-title">{{
+          product.name
+        }}</v-card-title>
+        <v-card-subtitle class="grey--text text--darken-2">{{
+          product.price
+        }}</v-card-subtitle>
+        <v-card-actions>
+          <v-btn
+            color="#002E60"
+            dark
+            text
+            @click="toggleDescription(product)"
+            rounded
+          >
+            {{ product.showDescription ? "Ocultar" : "Descripción" }}
           </v-btn>
-        </v-row>
-      </v-container>
+          <v-spacer></v-spacer>
+          <v-btn color="#002E60" dark @click="buy(product)" rounded>
+            Comprar
+          </v-btn>
+        </v-card-actions>
+        <v-expand-transition>
+          <div
+            class="blue--text text--darken-3"
+            v-show="product.showDescription"
+          >
+            <v-divider></v-divider>
+            <v-card-text>{{ product.description }}</v-card-text>
+          </div>
+        </v-expand-transition>
+      </v-card>
+    </v-col>
+  </v-row>
+  <v-row justify="center">
+    <v-btn color="#002E60" dark @click="toggleShowMore" rounded>
+      {{ showMoreText }}
+    </v-btn>
+  </v-row>
+</v-container>
+
       <br><br>
       <div style="margin-bottom: 60px;" id="nosotros"></div>
       <br>
@@ -380,20 +383,7 @@ export default {
             "Monitor Lenovo G27qc-30\nTamaño: 27 pulgadas\nFrecuencia de actualización: 165Hz\nRelación de aspecto: 16:9",
           showDescription: false,
         },
-        {
-          name: "Monitor Lenovo G27qc-30",
-          images: [
-            require("~/assets/img/monitor/monitor.jpeg"),
-            require("~/assets/img/monitor/monitor2.jpeg"),
-            require("~/assets/img/monitor/monitor3.jpeg"),
-            require("~/assets/img/monitor/monitor4.jpeg"),
-            require("~/assets/img/monitor/monitor5.jpeg"),
-          ],
-          price: "$999",
-          description:
-            "Monitor Lenovo G27qc-30\nTamaño: 27 pulgadas\nFrecuencia de actualización: 165Hz\nRelación de aspecto: 16:9",
-          showDescription: false,
-        },
+        
       ],
       showMore: false,
       currentImageIndex: 0, // imagen cero donde va iniciar 
@@ -608,7 +598,6 @@ export default {
   }
 }
 
-/* Estilos para tabletas */
 @media only screen and (min-width: 601px) and (max-width: 1024px) {
   .nav {
     font-size: 16px;
